@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FileAccountRepositoryTest {
 
@@ -43,5 +42,23 @@ class FileAccountRepositoryTest {
         assertThrows(FileNotFoundException.class, () -> accountRepository.getAllAccountsByClientId(clientId));
     }
 
+    @Test
+    void successUpdateNumberByClientId() throws IOException {
+        long clientId = 1L;
 
+        String filePath = "src/main/resources/Accounts.txt";
+        accountRepository = new FileAccountRepository(filePath);
+
+        assertTrue(accountRepository.updateClientNumber(clientId, 111, 222));
+    }
+
+    @Test
+    void failUpdateNumberByClientId() throws IOException {
+        long clientId = 3L;
+
+        String filePath = "src/main/resources/Accounts.txt";
+        accountRepository = new FileAccountRepository(filePath);
+
+        assertFalse(accountRepository.updateClientNumber(clientId, 111, 888));
+    }
 }
