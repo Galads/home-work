@@ -4,6 +4,8 @@ import com.sbrf.reboot.repository.AccountRepository;
 import lombok.NonNull;
 import lombok.val;
 
+import java.io.IOException;
+
 public class AccountService {
     private AccountRepository accountRepository;
 
@@ -13,7 +15,7 @@ public class AccountService {
 
     public boolean isClientHasContract(
             @NonNull long clientId,
-            @NonNull long contractNumber) {
+            @NonNull long contractNumber) throws IOException {
         val allAccounts = accountRepository.getAllAccountsByClientId(clientId);
         return allAccounts.contains(contractNumber);
     }

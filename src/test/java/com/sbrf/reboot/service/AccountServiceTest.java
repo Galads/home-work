@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +33,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void contractExist() {
+    void contractExist() throws IOException {
         Set<Long> accounts = new HashSet();
         accounts.add(111L);
 
@@ -45,7 +46,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void contractNotExist() {
+    void contractNotExist() throws IOException {
         Set<Long> accounts = new HashSet();
         accounts.add(222L);
 
