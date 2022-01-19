@@ -33,12 +33,12 @@ public class CollectionsTest {
     @Test
     public void addStudentToRating() {
 
-        List<String> students = new ArrayList<String>() {{
-            add("Козлов");
+        List<String> students = new LinkedList<String>() {{
             add("Иванов");
             add("Петров");
             add("Сидоров");
         }};
+        students.add(0, "Козлов");
 
         assertEquals(4, students.size());
     }
@@ -82,10 +82,10 @@ public class CollectionsTest {
             private String name;
         }
 
-        HashMap<Long, Book> bookshelf = new HashMap<Long, Book>() {{
-            put(1L, new Book("Математика"));
-            put(2L, new Book("Преступление и наказание"));
-            put(3L, new Book("Физика"));
+        List<Book> bookshelf = new ArrayList<Book>() {{
+            add(new Book("Математика"));
+            add(new Book("Преступление и наказание"));
+            add(new Book("Физика"));
         }};
 
         assertEquals(3, bookshelf.size());
