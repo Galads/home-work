@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDeposits<T extends Deposit> {
-    List<T> arrDeposits;
+    private List<T> arrDeposits;
 
     AccountDeposits(ArrayList<T> accountDeposit) {
         this.arrDeposits = accountDeposit;
