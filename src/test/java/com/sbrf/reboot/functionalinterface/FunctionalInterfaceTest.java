@@ -29,7 +29,7 @@ public class FunctionalInterfaceTest {
 
     @FunctionalInterface
     interface ParseReferencesParameters<T> {
-        LinkedList<String> parseAsString(T t);
+        List<String> parseAsString(T t);
     }
 
     static class ListConverter<T> {
@@ -63,7 +63,6 @@ public class FunctionalInterfaceTest {
                 ),
                 objectToJsonFunction
         );
-
         Assertions.assertTrue(strings.contains("{\"objectName\":\"Object-1\"}"));
         Assertions.assertTrue(strings.contains("{\"objectName\":\"Object-2\"}"));
     }
@@ -72,7 +71,7 @@ public class FunctionalInterfaceTest {
         public List<String> toListParam(
                 @NonNull List<T> objects,
                 ParseReferencesParameters<T> parseReferencesParameters) {
-            List<String> res = new ArrayList<>();
+            List<String> res = new LinkedList<>();
 
             if (objects.isEmpty())
                 throw new IllegalArgumentException("The list is empty");
