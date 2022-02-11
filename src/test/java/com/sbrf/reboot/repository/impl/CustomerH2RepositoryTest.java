@@ -53,6 +53,8 @@ class CustomerH2RepositoryTest {
         boolean userCreated1 = customerRepository.createCustomer("Lin", "lin@ya.ru");
         boolean userCreated2 = customerRepository.createCustomer("Lin", "lin@ya.ru");
 
-        customerRepository.deleteWhere("Lin", "lin@ya.ru");
+        boolean res = customerRepository.deleteWhere("Lin", "lin@ya.ru");
+
+        assertTrue(res);
     }
 }
