@@ -21,22 +21,22 @@ public class SomeService {
             public String call() throws Exception {
 
                 // Реализуйте отправку отчета используя CompletableFuture
-                String reportResult = reportService.sendReport("Отправляю отчет");
+                CompletableFuture<String> futureReport = CompletableFuture.supplyAsync(() ->
+                        reportService.sendReport("Отправляю отчет"));
 
-                //какой то код..
+                // какой то код может быть дополнительно в thenApply..
+                CompletableFuture<String> reportResult = futureReport.thenApply(result -> result);
+
                 Thread.sleep(Duration.ofSeconds(3).toMillis());
 
-                if (reportResult.equals("SUCCESS")) {
+                if ("SUCCESS".equals(reportResult.get())) {
                     System.out.println("Отчет отправлен успешно");
                 }
-
                 return "some return";
             }
         });
-
         handler.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
 
         executor.shutdownNow();
-
     }
 }
