@@ -2,7 +2,13 @@ package com.sbrf.reboot.repository.impl;
 
 import com.sbrf.reboot.dto.Customer;
 import com.sbrf.reboot.repository.CustomerRepository;
+import com.sbrf.reboot.repository.fluentAPI.Create;
+import com.sbrf.reboot.repository.fluentAPI.Drop;
+import com.sbrf.reboot.repository.fluentAPI.FluentSQLCreate;
+import com.sbrf.reboot.repository.fluentAPI.FluentSQLDrop;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -16,8 +22,16 @@ class CustomerH2RepositoryTest {
     private static CustomerRepository customerRepository;
 
     @BeforeAll
-    public static void before() throws SQLException {
+    public static void before() {
         customerRepository = new CustomerH2Repository();
+    }
+
+    @AfterEach
+    public void afterEachDropTable() {
+        FluentSQLDrop<String> fsd = Drop
+                .drop()
+                .table("my_db")
+                .execute();
     }
 
     @Test
@@ -56,5 +70,37 @@ class CustomerH2RepositoryTest {
         boolean res = customerRepository.deleteWhere("Lin", "lin@ya.ru");
 
         assertTrue(res);
+    }
+
+    @BeforeEach
+    void createTable() {
+        FluentSQLCreate<String> table = Create
+                .create()
+                .table("my_db")
+                .column("id", "LONG", "NOT NULL", "AUTO_INCREMENT")
+                .column("name", "VARCHAR(50)", "NOT NULL")
+                .column("eMAIL", "VARCHAR(50)", "NOT NULL")
+                .execute();
+    }
+
+    @Test
+    void createTableSuccess() {
+        String name = "new_db";
+        FluentSQLCreate<String> table = Create
+                .create()
+                .table(name)
+                .column("id", "LONG", "NOT NULL", "AUTO_INCREMENT")
+                .column("name", "VARCHAR(50)", "NOT NULL")
+                .column("eMAIL", "VARCHAR(50)", "NOT NULL")
+                .execute();
+
+        assertTrue(table.isResult());
+
+        FluentSQLDrop<String> fsd = Drop
+                .drop()
+                .table(name)
+                .execute();
+
+        assertTrue(fsd.isResult());
     }
 }
