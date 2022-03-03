@@ -2,15 +2,14 @@ package com.sbrf.reboot.repository.impl;
 
 import com.sbrf.reboot.dto.Customer;
 import com.sbrf.reboot.repository.CustomerRepository;
-import lombok.Getter;
 import lombok.NonNull;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public class CustomerH2Repository implements CustomerRepository {
+
     private final String JDBC_DRIVER = "org.h2.Driver";
     private final String DB_URL = "jdbc:h2:~/my_db";
 
